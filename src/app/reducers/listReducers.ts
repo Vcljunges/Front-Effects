@@ -27,15 +27,13 @@ export const listReducer = (list: Item[], action: Action) => {
         case 'add':
             return [...list, {id: list.length, text: action.payload, done: false}];
         case 'edit':
-            return list.map((t) => {
-                if(t.id === action.payload.id) t.text = action.payload.newText;
-                return t;
-            });
+            return list.map((t) =>
+                t.id === action.payload.id ? { ...t, text: action.payload.newText } : t
+            );
         case 'toggle':
-            return list.map((t) => {
-                if(t.id === action.payload.id) t.done = !t.done;
-                return t;
-            });
+            return list.map((t) =>
+                t.id === action.payload.id ? { ...t, done: !t.done } : t
+            );
         case 'delete':
             return list.filter((t) => t.id !== action.payload.id);
         default:
